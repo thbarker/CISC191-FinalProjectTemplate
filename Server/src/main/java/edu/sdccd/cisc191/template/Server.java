@@ -1,5 +1,7 @@
 package edu.sdccd.cisc191.template;
 
+import edu.sdccd.cisc191.guiPackage.MainWindow;
+
 import java.net.*;
 import java.io.*;
 
