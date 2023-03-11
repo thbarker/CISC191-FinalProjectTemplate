@@ -47,7 +47,7 @@ public class CalendarController
     {
         for(int i = 0; i < eventList.size(); i++)
         {
-            eventList.get(i).print();
+            System.out.println(eventList.get(i).toString());
         }
     }
 
@@ -152,7 +152,9 @@ public class CalendarController
                 dateArray[i][j] = new Date(temp.getTime());
 
                 temp = new Date(temp.getTime()+millisecondsInADay);
+                System.out.print(dateArray[i][j].getDate() +" ");
             }
+            System.out.println();
         }
     }
 
@@ -164,5 +166,15 @@ public class CalendarController
     public void today()
     {
         currentDate = new Date(today.getTime());
+    }
+
+    public Event getEvent(int index)
+    {
+        return eventList.get(index);
+    }
+
+    public int size()
+    {
+        return eventList.size();
     }
 }

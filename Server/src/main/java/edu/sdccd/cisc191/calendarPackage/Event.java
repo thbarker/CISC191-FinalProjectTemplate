@@ -50,11 +50,13 @@ public class Event
     /**
      * This getter method returns the time of the event
      */
-    public void print()
+    public String toString()
     {
-        System.out.print(title + ", "
-                + location + ", ");
-        System.out.println(start.toString());
+        String temp;
+        temp = title + ", "
+                + location + ", "
+                + start.toString();
+        return temp;
     }
     /**
      * This method will check if a calling Event takes place before

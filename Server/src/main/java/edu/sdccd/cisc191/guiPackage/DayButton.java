@@ -3,7 +3,6 @@ package edu.sdccd.cisc191.guiPackage;
 import edu.sdccd.cisc191.calendarPackage.CalendarController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.Date;
@@ -18,6 +17,7 @@ public class DayButton extends Button
     public DayButton(Date d, int month, CalendarController cal)
     {
         date = d;
+        cal.updateArray();
         this.setText(Integer.toString(date.getDate()));
         if(month == d.getMonth())
         {
