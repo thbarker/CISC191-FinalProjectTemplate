@@ -41,6 +41,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
+
         JavaFX javaFX = new JavaFX();
         javaFX.main(args);
 

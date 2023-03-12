@@ -100,5 +100,4 @@ public class Dealership implements Interface {
         }
         allCars = tempArr;
     }
-
 }

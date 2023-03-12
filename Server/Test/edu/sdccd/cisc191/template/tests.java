@@ -14,6 +14,7 @@ class tests {
      */
     @Test
     void addCar() {
+
         Dealership tester = new Dealership("San Diego");
         tester.addCar(new Ford("Bronco", 2017, 50000));
         ArrayList<Car> returnVal = new ArrayList<>();

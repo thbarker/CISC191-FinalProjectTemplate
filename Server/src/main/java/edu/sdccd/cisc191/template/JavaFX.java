@@ -42,6 +42,7 @@ public class JavaFX extends Application {
                 grid.getChildren().clear();
                 renderDealership(dealership, grid, allDealerships);
             }
+            
         }
 
     };

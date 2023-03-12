@@ -12,6 +12,7 @@ public interface Interface {
      */
     public ArrayList<Car> getAllCars();
 
+
     /**
      * @param newCar this method takes a car object and adds it to the end of the arraylist
      */
