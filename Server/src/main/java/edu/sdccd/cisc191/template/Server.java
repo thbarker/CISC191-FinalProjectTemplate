@@ -13,7 +13,7 @@ import java.io.*;
  * as it is received, rather than creating a separate thread
  * to process the connection.
  */
-public class Server{
+public class Server {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
@@ -41,6 +41,9 @@ public class Server{
     }
 
     public static void main(String[] args) {
+        JavaFX javaFX = new JavaFX();
+        javaFX.main(args);
+
         Server server = new Server();
         try {
             server.start(4444);

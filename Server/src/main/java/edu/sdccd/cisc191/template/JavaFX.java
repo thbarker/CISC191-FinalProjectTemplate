@@ -109,6 +109,30 @@ public class JavaFX extends Application {
     }
 
     /**
+     * @param allDealerships arraylist of all dealerships
+     * @return returns the oldest car in all dealerships.
+     */
+    public static Car getOldestCar(ArrayList<Dealership> allDealerships){
+        //get first car in 2d array
+        Car minCar = allDealerships.get(0).getAllCars().get(0);
+        //loop though array of dealerships
+        for(int r=0; r<allDealerships.size(); r++){
+            //get all cars in each dealership
+            ArrayList<Car> allDealershipCars = allDealerships.get(r).getAllCars();
+            //loop though each car
+            for(int c=0; c<allDealershipCars.size(); c++){
+                //check if current car year is older than current youngest.
+                Car currentCar = allDealershipCars.get(c);
+                if(parseInt(minCar.getYear())>parseInt(currentCar.getYear())){
+                    //set the youngest car to current car
+                    minCar = currentCar;
+                }
+            }
+        }
+        return minCar;
+    }
+
+    /**
      * @param stage the primary stage for this application, onto which
      *              the application scene can be set.
      * @throws IOException
@@ -238,13 +262,23 @@ public class JavaFX extends Application {
                 }
             }
         };
+        Label oldestCarText = new Label("");
+        actionsGrid.add(oldestCarText, 1, 6);
         Button addButton = new Button("Add car");
         addButton.setOnAction(addCar);
         actionsGrid.add(addButton,0,5);
+        EventHandler<ActionEvent> oldestCarAction = e -> {
+            Car oldestCar = getOldestCar(allDealerships);
+           oldestCarText.setText(oldestCar.getYear()+" "+oldestCar.getBrand()+" "+oldestCar.getModel()+" with "+oldestCar.getMiles()+ " miles");
+        };
+
+        Button oldestButton = new Button("Get oldest car of all dealerships");
+        oldestButton.setOnAction(oldestCarAction);
+        actionsGrid.add(oldestButton, 0, 6);
 
         //the three grids are then added to a vbox, and rendered to the scene
         VBox vbox = new VBox(headerGrid, dealershipGrid, actionsGrid);
-        Scene scene = new Scene(vbox, 480, 400);
+        Scene scene = new Scene(vbox, 500, 500);
         stage.setTitle("Dealership Manager");
         stage.setScene(scene);
         stage.show();

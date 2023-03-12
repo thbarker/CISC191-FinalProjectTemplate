@@ -54,7 +54,6 @@ public class Dealership implements Interface {
      *            must be the one in the arraylist
      */
     public void removeCar(Car car){
-        System.out.println(allCars.indexOf(car));
         allCars.remove(allCars.indexOf(car));
     }
 
