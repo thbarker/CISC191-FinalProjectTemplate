@@ -7,7 +7,6 @@ public class CalendarController
 {
 
     private ArrayList<Event> eventList; //List of events for calendar
-
     private static final Date today = new Date(); //Selected Date to Manipulate
 
     private Date currentDate; //Date to represent the month to start
@@ -176,5 +175,19 @@ public class CalendarController
     public int size()
     {
         return eventList.size();
+    }
+
+    public ArrayList<String> getCurrentEvents()
+    {
+        ArrayList<String> list  = new ArrayList();
+        for(int i = 0; i < eventList.size(); i++)
+        {
+            if(eventList.get(i).sameDate(currentDate))
+            {
+                list.add(eventList.get(i).getTitle() + "," + eventList.get(i).getLocation());
+            }
+        }
+
+        return list;
     }
 }

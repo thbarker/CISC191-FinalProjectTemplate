@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ public class MainWindow extends Application {
     private HeaderLabel month, day;
     private DaysOfWeek days;
 
-    private TextArea eventArea;
+    private VBox eventArea;
     private CalendarController myCalendar;
     private VBox grid;
 
@@ -71,8 +72,8 @@ public class MainWindow extends Application {
         day.setAlignment(Pos.CENTER_LEFT);
         day.setPadding(new Insets(0));
 
-        eventArea = new TextArea();
-        eventArea.setMaxWidth(250);
+        eventArea = new VBox();
+        initEventArea();
 
         grid = new VBox();
         update();
@@ -116,11 +117,11 @@ public class MainWindow extends Application {
 
         TextField titleField = new TextField();
         titleField.setText("New Event");
-        titleField.setMaxWidth(250);
+        titleField.setMaxWidth(300);
 
         TextField locationField = new TextField();
         locationField.setPromptText("Location");
-        locationField.setMaxWidth(250);
+        locationField.setMaxWidth(300);
 
         styleTextField(titleField);
         styleTextField(locationField);
@@ -148,21 +149,14 @@ public class MainWindow extends Application {
          */
 
         root.getChildren().addAll(mainLayout, sideBar);
-        mainScene = new Scene(root, 1240, 800);
+        mainScene = new Scene(root, 1290, 800);
     }
 
     public void update()
     {
         month.setText(myCalendar.getMonthAlpha() + " " + Integer.toString(myCalendar.getCurrentYear()));
         setDayLabel();
-
-        String temp = "";
-        for(int i = 0; i < myCalendar.size(); i++)
-        {
-            temp += myCalendar.getEvent(i).toString() + "\n";
-        }
-        eventArea.setText(temp);
-        eventArea.setScrollTop(0);
+        initEventArea();
 
         grid.getChildren().clear();
 
@@ -183,6 +177,7 @@ public class MainWindow extends Application {
                     dayButtons[finalI][finalJ].handleClick(myCalendar);
                     System.out.println(myCalendar.getCurrentDate().toString());
                     setDayLabel();
+                    initEventArea();
                 });
             }
             branch.setSpacing(5);
@@ -209,20 +204,20 @@ public class MainWindow extends Application {
         button.setStyle("-fx-background-color: rgb(234,234,234);" +
                 " -fx-border-color: #1a1a1a; " +
                 "-fx-border-width: 1px; " +
-                "-fx-pref-width: 250px; " +
+                "-fx-pref-width: 300px; " +
                 "-fx-pref-height: 30px;");
         button.setOnMouseEntered(e -> {
             button.setStyle("-fx-background-color: rgba(0,0,0,0.11);" +
                     " -fx-border-color: #1a1a1a; " +
                     "-fx-border-width: 1px; " +
-                    "-fx-pref-width: 250px; " +
+                    "-fx-pref-width: 300px; " +
                     "-fx-pref-height: 30px;");
         });
         button.setOnMouseExited(e -> {
             button.setStyle("-fx-background-color: rgb(234,234,234);" +
                     " -fx-border-color: #1a1a1a; " +
                     "-fx-border-width: 1px; " +
-                    "-fx-pref-width: 250px; " +
+                    "-fx-pref-width: 300px; " +
                     "-fx-pref-height: 30px;");
         });
     }
@@ -232,8 +227,18 @@ public class MainWindow extends Application {
         field.setStyle("-fx-background-color: rgb(255,255,255);" +
                 " -fx-border-color: #1a1a1a; " +
                 "-fx-border-width: 1px; " +
-                "-fx-pref-width: 250px; " +
+                "-fx-pref-width: 300px; " +
                 "-fx-pref-height: 30px;");
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("[a-zA-Z0-9 !/?]*")) {
+                return change;
+            } else {
+                return null;
+            }
+        });
+
+        field.setTextFormatter(formatter);
     }
 
     public void setDayLabel()
@@ -261,6 +266,33 @@ public class MainWindow extends Application {
                 " " + myCalendar.getCurrentDate().getDate() + ", " +
                 (myCalendar.getCurrentDate().getYear() + 1900));
         day.setFont(new Font("Cambria", 20));
+    }
+
+    public void initEventArea()
+    {
+        eventArea.setMaxWidth(300);
+        eventArea.setMaxHeight(400);
+        eventArea.setMinHeight(400);
+        eventArea.setMaxWidth(300);
+        eventArea.setMaxWidth(300);
+        eventArea.setSpacing(10);
+
+        eventArea.getChildren().clear();
+
+        ArrayList<String> temp  = new ArrayList();
+        temp = myCalendar.getCurrentEvents();
+        for(int i = 0; i < temp.size(); i++)
+        {
+            int spot = temp.get(i).indexOf(",");
+            Label title = new Label(temp.get(i).substring(0,spot));
+            title.setFont(new Font("Cambria", 15));
+            Label location = new Label("Location: "+temp.get(i).substring(spot+1,temp.get(i).length()));
+            location.setFont(new Font("Cambria", 10));
+
+            VBox smallBox = new VBox();
+            smallBox.getChildren().addAll(title,location);
+            eventArea.getChildren().add(smallBox);
+        }
     }
 
 }

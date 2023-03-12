@@ -47,16 +47,13 @@ public class Event
     {
         return start;
     }
-    /**
-     * This getter method returns the time of the event
-     */
-    public String toString()
+    public String getTitle()
     {
-        String temp;
-        temp = title + ", "
-                + location + ", "
-                + start.toString();
-        return temp;
+        return title;
+    }
+    public String getLocation()
+    {
+        return location;
     }
     /**
      * This method will check if a calling Event takes place before
@@ -85,4 +82,12 @@ public class Event
             return true;
         return false;
     }
+
+    public boolean sameDate(Date d)
+    {
+        return d.getDate() == this.getStart().getDate()
+                && d.getMonth() == this.getStart().getMonth()
+                && d.getYear() == this.getStart().getYear();
+    }
+
 }

@@ -15,6 +15,6 @@ public class HeaderLabel extends Label
         this.setPadding(LABEL_PADDING);
         this.setFont(new Font("Cambria", 25));
         this.setAlignment(Pos.CENTER);
-        this.setPrefSize(250, 50);
+        this.setPrefSize(300, 50);
     }
 }
