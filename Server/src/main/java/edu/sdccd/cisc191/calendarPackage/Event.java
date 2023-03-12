@@ -1,6 +1,10 @@
 package edu.sdccd.cisc191.calendarPackage;
 import java.util.Date;
 
+/**
+ * This Class extends represents a single event that
+ * manages fields: title, location, and start
+ */
 public class Event
 {
     private String title;
@@ -82,7 +86,14 @@ public class Event
             return true;
         return false;
     }
-
+    /**
+     * This method will check if a calling Event takes place after
+     * than the passed argument event
+     * @param d is the Date to be checked with the calling
+     *               object
+     * @return the bool value for if the calling object has the same date
+     *         as parameter d
+     */
     public boolean sameDate(Date d)
     {
         return d.getDate() == this.getStart().getDate()

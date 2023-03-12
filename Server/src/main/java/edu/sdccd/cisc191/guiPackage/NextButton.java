@@ -10,7 +10,11 @@ import javafx.scene.shape.Path;
 
 import java.util.Date;
 
-
+/**
+ * This Class extends from the JavaFX Button Class and implements stylist
+ * and functional changes that allow it to perform the role of a next button.
+ * It is used to navigate the Calendar by setting the Calendar forward one month
+ */
 public class NextButton extends Button
 {
     public NextButton()

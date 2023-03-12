@@ -8,16 +8,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+/**
+ * This Class extends from the JavaFX HBox class and
+ * contains all the Labels for the Days of the Week
+ * Constructor takes no arguments, and initializes everything
+ */
 public class DaysOfWeek extends HBox
 {
-    public static Insets LABEL_PADDING = new Insets(15);
-
     public DaysOfWeek()
     {
         for(int i = 0; i < 7; i++)
         {
             Label day = new Label();
-            //day.setPadding(LABEL_PADDING);
             day.setFont(new Font("Cambria", 20));
 
             switch(i)

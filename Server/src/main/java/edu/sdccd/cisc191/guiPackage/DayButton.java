@@ -17,7 +17,6 @@ public class DayButton extends Button
     public DayButton(Date d, int month, CalendarController cal)
     {
         date = d;
-        cal.updateArray();
         this.setText(Integer.toString(date.getDate()));
         if(month == d.getMonth())
         {
@@ -62,7 +61,6 @@ public class DayButton extends Button
         if(!disabled)
         {
             cal.setCurrentDate(new Date(this.getDate().getTime()));
-            cal.updateArray();
             if(date.getTime() == cal.getCurrentDate().getTime())
                 setCurrentStyle();
             else

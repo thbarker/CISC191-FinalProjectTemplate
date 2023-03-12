@@ -14,31 +14,34 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
- FIXES and Train of Thought : Main problem right now arises from the fact that the buttons cannot set on action
- Right now I do not have the daybutton array from the CalendarController class linked with the buttons in the grid
- This is what needs to be fixed
+ * This class extends from the JavaFX Application class.
+ * It displays and manages a virtual Calendar to a user.
+ * Usages include A GUI Calendar that can be traversed
+ * and a Side Bar to add New Events.
  */
 
 public class MainWindow extends Application {
     private HeaderLabel month, day;
     private DaysOfWeek days;
-
     private VBox eventArea;
     private CalendarController myCalendar;
     private VBox grid;
-
     private Scene mainScene;
-
     private Stage window;
-
     private DayButton[][] dayButtons = new DayButton[6][7];
 
+    /**
+     * Main Method calls the launch method from MainWindow
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
-
+    /**
+     * Overridden start method sets up the GUI
+     * @param primaryStage is the stage to show
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         myCalendar = new CalendarController();
@@ -52,10 +55,13 @@ public class MainWindow extends Application {
         window.show();
         window.setResizable(false);
     }
+    /**
+     * This method generates all the details and aspects of the
+     * MainWindow.
+     */
+    private void generateMainScene() {
 
-    public void generateMainScene() {
-
-        HBox root = new HBox(); //Root to be set to the scene
+        HBox root = new HBox(); //Root to be set to the scene, will contain calendar and sidebar
 
         /*
         Below is the code for the left hand side display of the virtual calendar
@@ -72,15 +78,13 @@ public class MainWindow extends Application {
         day.setAlignment(Pos.CENTER_LEFT);
         day.setPadding(new Insets(0));
 
-        eventArea = new VBox();
-        initEventArea();
-
-        grid = new VBox();
+        grid = new VBox(); //VBox that contains the grid display of the days in the Calendar
         update();
 
         BackButton back = new BackButton();
         NextButton next = new NextButton();
 
+        //PROCESSING - handling button actions
         back.setOnAction(e -> {
             back.handleClick(myCalendar);
             update();
@@ -90,7 +94,7 @@ public class MainWindow extends Application {
             update();
         });
 
-        //SET header and Bottom buttons to the root borderpane
+        //PROCESSING - Set header and Bottom buttons to the root borderpane
         mainLayout.setTop(headerRoot);
         mainLayout.setCenter(grid);
 
@@ -106,8 +110,11 @@ public class MainWindow extends Application {
 
         VBox sideBar = new VBox(); //HBox to contain bottom buttons
 
-        Button addEvent = new Button();
-        Button todayButton = new Button();
+        eventArea = new VBox(); //VBox that contains the Events listed out in sidebar
+        initEventArea();
+
+        Button addEvent = new Button(); //Add Event Button
+        Button todayButton = new Button(); //Go to Today Button
 
         styleButton(addEvent);
         styleButton(todayButton);
@@ -115,17 +122,18 @@ public class MainWindow extends Application {
         addEvent.setText("Add Event");
         todayButton.setText("Go to Today");
 
-        TextField titleField = new TextField();
+        TextField titleField = new TextField(); //Event Title Text Field
         titleField.setText("New Event");
         titleField.setMaxWidth(300);
 
-        TextField locationField = new TextField();
+        TextField locationField = new TextField(); //Event Location Text field
         locationField.setPromptText("Location");
         locationField.setMaxWidth(300);
 
         styleTextField(titleField);
         styleTextField(locationField);
 
+        //PROCESSING - handling button Actions
         addEvent.setOnAction(e -> {
             Date temp = new Date(myCalendar.getCurrentDate().getTime());
             myCalendar.addEvent(new Event(titleField.getText(), locationField.getText(), temp));
@@ -136,6 +144,7 @@ public class MainWindow extends Application {
             update();
         });
 
+        //PROCESSING - adding nodes to the sidebar and aligning
         sideBar.getChildren().addAll(day, eventArea, todayButton, titleField, locationField, addEvent);
 
         sideBar.setAlignment(Pos.TOP_CENTER);
@@ -152,15 +161,17 @@ public class MainWindow extends Application {
         mainScene = new Scene(root, 1290, 800);
     }
 
-    public void update()
+
+    /**
+     * This Method handles an update of the UI
+     */
+    private void update()
     {
         month.setText(myCalendar.getMonthAlpha() + " " + Integer.toString(myCalendar.getCurrentYear()));
         setDayLabel();
         initEventArea();
 
         grid.getChildren().clear();
-
-        myCalendar.updateArray();
 
         for(int i = 0; i < 6; i++)
         {
@@ -175,7 +186,6 @@ public class MainWindow extends Application {
                     if(!dayButtons[finalI][finalJ].disabled())
                         resetStyle();
                     dayButtons[finalI][finalJ].handleClick(myCalendar);
-                    System.out.println(myCalendar.getCurrentDate().toString());
                     setDayLabel();
                     initEventArea();
                 });
@@ -187,7 +197,11 @@ public class MainWindow extends Application {
         grid.setSpacing(5);
     }
 
-    public void resetStyle()
+    /**
+     * This Method resets the style of the DayButtons to their default style
+     * as long as the dayButton is not a disabled day
+     */
+    private void resetStyle()
     {
         for(int i = 0; i < 6; i++)
         {
@@ -198,8 +212,11 @@ public class MainWindow extends Application {
             }
         }
     }
-
-    public void styleButton(Button button)
+    /**
+     * This Method stylizes the buttons
+     * @param button, is the button to be styled
+     */
+    private void styleButton(Button button)
     {
         button.setStyle("-fx-background-color: rgb(234,234,234);" +
                 " -fx-border-color: #1a1a1a; " +
@@ -221,8 +238,10 @@ public class MainWindow extends Application {
                     "-fx-pref-height: 30px;");
         });
     }
-
-    public void styleTextField(TextField field)
+    /**
+     * This Method initializes the Text Fields
+     */
+    private void styleTextField(TextField field)
     {
         field.setStyle("-fx-background-color: rgb(255,255,255);" +
                 " -fx-border-color: #1a1a1a; " +
@@ -240,8 +259,10 @@ public class MainWindow extends Application {
 
         field.setTextFormatter(formatter);
     }
-
-    public void setDayLabel()
+    /**
+     * This Method initializes the Days of the Week Heading
+     */
+    private void setDayLabel()
     {
         String temp;
         switch(myCalendar.getCurrentDate().getDay())
@@ -268,7 +289,10 @@ public class MainWindow extends Application {
         day.setFont(new Font("Cambria", 20));
     }
 
-    public void initEventArea()
+    /**
+     * This Method initializes the Event Area
+     */
+    private void initEventArea()
     {
         eventArea.setMaxWidth(300);
         eventArea.setMaxHeight(400);
@@ -286,9 +310,12 @@ public class MainWindow extends Application {
             int spot = temp.get(i).indexOf(",");
             Label title = new Label(temp.get(i).substring(0,spot));
             title.setFont(new Font("Cambria", 15));
-            Label location = new Label("Location: "+temp.get(i).substring(spot+1,temp.get(i).length()));
-            location.setFont(new Font("Cambria", 10));
-
+            Label location = new Label();
+            if(temp.get(i).substring(spot+1,temp.get(i).length()) == "")
+            {
+                location.setText("Location: " + temp.get(i).substring(spot + 1, temp.get(i).length()));
+                location.setFont(new Font("Cambria", 10));
+            }
             VBox smallBox = new VBox();
             smallBox.getChildren().addAll(title,location);
             eventArea.getChildren().add(smallBox);

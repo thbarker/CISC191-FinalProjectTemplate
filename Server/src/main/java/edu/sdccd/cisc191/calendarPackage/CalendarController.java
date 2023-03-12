@@ -3,20 +3,25 @@ package edu.sdccd.cisc191.calendarPackage;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+/**
+ * This Class Controls the Calendar aspect of the Application.
+ * It's constructor takes no arguments, and initializes a new Calendar
+ * Controller with no events and the current Date set to Today
+ */
 public class CalendarController
 {
 
     private ArrayList<Event> eventList; //List of events for calendar
-    private static final Date today = new Date(); //Selected Date to Manipulate
+    private static final Date today = new Date(); //Today's date as a static final Date
 
-    private Date currentDate; //Date to represent the month to start
-    // the calendar on and be manipulated when the calendar is manipulated
+    private Date currentDate; //Date to represent the user's current Date choice
 
     private Date[][] dateArray; //2D array of dates that represent the current month's dates to be displayed
 
     /**
      * Default Constructor initializes a new arraylist
-     * of type Event
+     * of type Event, new current Date as Today's date
      */
     public CalendarController()
     {
@@ -26,7 +31,7 @@ public class CalendarController
     }
     /**
      * This method adds an event to the calendar, sorted by
-     * time of the event.
+     * date of the event.
      * @param e is the Event to be inserted sorted
      */
     public void addEvent(Event e)
@@ -34,7 +39,7 @@ public class CalendarController
         int i;
         for(i = 0; i < eventList.size(); i++)
         {
-            if(eventList.size() == i || e.before(eventList.get(i)))
+            if(e.before(eventList.get(i)))
                 break;
         }
         eventList.add(i, e);
@@ -49,33 +54,50 @@ public class CalendarController
             System.out.println(eventList.get(i).toString());
         }
     }
-
+    /**
+     * hasEvent method to return the boolean value representing
+     * if the Calendar has an event on a given date.
+     * @param d is the date to check for
+     */
     public boolean hasEvent(Date d)
     {
         for(Event e: eventList)
         {
-            if(e.getStart().getDate() == d.getDate()
-               && e.getStart().getMonth() == d.getMonth()
-               && e.getStart().getYear() == d.getYear())
+            if(e.sameDate(d))
                 return true;
         }
         return false;
     }
 
+    /**
+     * This method returns today's date
+     */
     public Date getToday()
     {
         return today;
     }
+
+    /**
+     * This method returns the current Dat
+     */
     public Date getCurrentDate()
     {
         return currentDate;
     }
 
+    /**
+     * This method sets the current Date
+     * @param d Date to set to the current Date
+     */
     public void setCurrentDate(Date d)
     {
         currentDate = d;
     }
 
+    /**
+     * This method updates the CalendarController to depict the next
+     * month in the Calendar
+     */
     public void nextMonth()
     {
         if (currentDate.getMonth() == 11)
@@ -85,9 +107,14 @@ public class CalendarController
         }
         else
             currentDate.setMonth(currentDate.getMonth() + 1);
+        updateArray();
     }
 
-    public void lastMonth()
+    /**
+     * This method updates the CalendarController to depict the previous
+     * month in the Calendar
+     */
+    public void prevMonth()
     {
         if (currentDate.getMonth() == 0)
         {
@@ -97,7 +124,9 @@ public class CalendarController
         else
             currentDate.setMonth(currentDate.getMonth() - 1);
     }
-
+    /**
+     * This method returns the String of the Current Month
+     */
     public String getMonthAlpha()
     {
         int m = currentDate.getMonth();
@@ -121,6 +150,9 @@ public class CalendarController
         return mAlpha;
     }
 
+    /**
+     * This method returns the current Date's year as an int
+     */
     public int getCurrentYear()
     {
         return currentDate.getYear()+1900;
@@ -129,7 +161,7 @@ public class CalendarController
     /**
      This method returns the Date of the first of the current month
      */
-    public Date getFirstSunday()
+    private Date getFirstSunday()
     {
         long millisecondsInADay = 1000 * 60 * 60 * 24;
         Date temp = new Date(currentDate.getTime());
@@ -139,7 +171,11 @@ public class CalendarController
         return temp;
     }
 
-    public void updateArray()
+    /**
+     * This method updates the CalendarController's 2D Date Array
+     * with the correct values to be displayed
+     */
+    private void updateArray()
     {
         long millisecondsInADay = 1000 * 60 * 60 * 24;
         dateArray = new Date[6][7];
@@ -149,45 +185,63 @@ public class CalendarController
             for(int j = 0; j < 7; j++)
             {
                 dateArray[i][j] = new Date(temp.getTime());
-
                 temp = new Date(temp.getTime()+millisecondsInADay);
-                System.out.print(dateArray[i][j].getDate() +" ");
             }
-            System.out.println();
         }
     }
 
+    /**
+     * This method returns the date of the Calendar's date array
+     * at i,j
+     * @param i is the first index
+     * @param j is the second index
+     */
     public Date getDate(int i, int j)
     {
         return dateArray[i][j];
     }
 
+    /**
+     * This method sets the current Date to Today
+     */
     public void today()
     {
         currentDate = new Date(today.getTime());
     }
 
-    public Event getEvent(int index)
+    /**
+     * This method returns an Event at index 'index'
+     * @param index is the index of the Arraylist eventList
+     * @return Event of whatever index was passed
+     */
+    private Event getEvent(int index)
     {
         return eventList.get(index);
     }
 
-    public int size()
+    /**
+     * This method returns an int to represent the size of the eventList
+     * @return int as the current Size of EventList
+     */
+    private int size()
     {
         return eventList.size();
     }
 
+    /**
+     * This method returns a String Arraylist with all the info for
+     * Events on the Current Day
+     * @return ArrayList<String> with 2 parts seperated by a ","
+     *         The title and the location
+     */
     public ArrayList<String> getCurrentEvents()
     {
         ArrayList<String> list  = new ArrayList();
         for(int i = 0; i < eventList.size(); i++)
         {
             if(eventList.get(i).sameDate(currentDate))
-            {
                 list.add(eventList.get(i).getTitle() + "," + eventList.get(i).getLocation());
-            }
         }
-
         return list;
     }
 }

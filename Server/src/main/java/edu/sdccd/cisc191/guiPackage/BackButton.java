@@ -7,6 +7,11 @@ import javafx.scene.shape.*;
 
 import java.util.Date;
 
+/**
+ * This Class extends from the JavaFX Button Class and implements stylist
+ * and functional changes that allow it to perform the role of a back button.
+ * It is used to navigate the Calendar by setting the Calendar back one month
+ */
 public class BackButton extends Button
 {
     public BackButton()
@@ -32,7 +37,7 @@ public class BackButton extends Button
 
     public void handleClick(CalendarController cal)
     {
-        cal.lastMonth();
+        cal.prevMonth();
     }
 
 }
