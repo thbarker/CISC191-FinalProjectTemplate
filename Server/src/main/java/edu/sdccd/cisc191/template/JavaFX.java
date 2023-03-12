@@ -33,16 +33,17 @@ public class JavaFX extends Application {
      *             same location passed though the parameter. The car is then
      *             added and removed from the respective dealerships,and the display is re-rendered.
      */
-    private void transferDealership(ActionEvent event, Car toTransfer, String transferDealership, Dealership dealership, ArrayList<Dealership> allDealerships, GridPane grid){
-
-        for(int transferIndex = 0; transferIndex<allDealerships.size(); transferIndex++){
-            if(allDealerships.get(transferIndex).getLocation().equals(transferDealership)){
+    private void transferDealership(ActionEvent event, Car toTransfer, String transferDealership, Dealership dealership, Dealership[] allDealerships, GridPane grid){
+        //loop through all dealerships and find location that matches combobox string
+        for(int transferIndex = 0; transferIndex<allDealerships.length; transferIndex++){
+            if(allDealerships[transferIndex].getLocation().equals(transferDealership)){
+                //add and remove car
                 dealership.removeCar(toTransfer);
-                allDealerships.get(transferIndex).addCar(toTransfer);
+                allDealerships[transferIndex].addCar(toTransfer);
                 grid.getChildren().clear();
                 renderDealership(dealership, grid, allDealerships);
             }
-            
+
         }
 
     };
@@ -53,8 +54,8 @@ public class JavaFX extends Application {
      * @param allDealerships arraylist of all dealerships
      *  This renders the cars and labels for the dealership.
      */
-    public void renderDealership(Dealership dealership,  GridPane grid, ArrayList<Dealership> allDealerships){
-        ArrayList<Car> allCars = dealership.getAllCars();
+    public void renderDealership(Dealership dealership,  GridPane grid, Dealership[] allDealerships){
+        Car[] allCars = dealership.getAllCars();
         grid.add(new Label("Brand"), 0, 0);
         grid.add(new Label("Model"), 1, 0);
         grid.add(new Label("Year"), 2, 0);
@@ -76,21 +77,21 @@ public class JavaFX extends Application {
             d2 = "Los Angeles";
         }
         //loops though each car and renders a row for each.
-        for(int i =0; i<allCars.size(); i++){
+        for(int i =0; i<allCars.length; i++){
             //get all information
-            String modelString = allCars.get(i).getBrand();
+            String modelString = allCars[i].getBrand();
             Label modelLabel = new Label(modelString);
             grid.add(modelLabel, 0, i+1);
 
-            String brandString = allCars.get(i).model;
+            String brandString = allCars[i].getModel();
             Label brandLabel = new Label(brandString);
             grid.add(brandLabel, 1, i+1);
 
-            String yearString = allCars.get(i).getYear();
+            String yearString = allCars[i].getYear();
             Label yearLabel = new Label(yearString);
             grid.add(yearLabel, 2, i+1);
 
-            String milesString = allCars.get(i).getMiles();
+            String milesString = allCars[i].getMiles();
             Label milesLabel = new Label(milesString);
             grid.add(milesLabel, 3, i+1);
 
@@ -103,7 +104,7 @@ public class JavaFX extends Application {
 
             //button for transfer, bound to the transfer dealership method
             Button transferButton = new Button("Transfer");
-            Car toTransfer = allCars.get(i);
+            Car toTransfer = allCars[i];
             transferButton.setOnAction(e -> transferDealership(e, toTransfer, transferDealership.getValue().toString(), dealership, allDealerships, grid));
             grid.add(transferButton, 6, i+1);
         }
@@ -113,17 +114,17 @@ public class JavaFX extends Application {
      * @param allDealerships arraylist of all dealerships
      * @return returns the oldest car in all dealerships.
      */
-    public static Car getOldestCar(ArrayList<Dealership> allDealerships){
+    public static Car getOldestCar(Dealership[] allDealerships){
         //get first car in 2d array
-        Car minCar = allDealerships.get(0).getAllCars().get(0);
+        Car minCar = allDealerships[0].getAllCars()[0];
         //loop though array of dealerships
-        for(int r=0; r<allDealerships.size(); r++){
+        for(int r=0; r<allDealerships.length; r++){
             //get all cars in each dealership
-            ArrayList<Car> allDealershipCars = allDealerships.get(r).getAllCars();
+            Car[] allDealershipCars = allDealerships[r].getAllCars();
             //loop though each car
-            for(int c=0; c<allDealershipCars.size(); c++){
+            for(int c=0; c<allDealershipCars.length; c++){
                 //check if current car year is older than current youngest.
-                Car currentCar = allDealershipCars.get(c);
+                Car currentCar = allDealershipCars[c];
                 if(parseInt(minCar.getYear())>parseInt(currentCar.getYear())){
                     //set the youngest car to current car
                     minCar = currentCar;
@@ -160,10 +161,10 @@ public class JavaFX extends Application {
         dealership3.addCar(new Honda("Accord", 2017, 85000));
         dealership3.addCar(new Ford("Bronco", 2019, 40000));
 
-        ArrayList<Dealership> allDealerships = new ArrayList<>();
-        allDealerships.add(dealership1);
-        allDealerships.add(dealership2);
-        allDealerships.add(dealership3);
+        Dealership[] allDealerships = new Dealership[3];
+        allDealerships[0]=dealership1;
+        allDealerships[1]=dealership2;
+        allDealerships[2]=dealership3;
 
         //creating the 3 grid panes. They are seperated in order to allow for
         // efficient re-rendering
@@ -189,11 +190,11 @@ public class JavaFX extends Application {
         //creates the header with the dealership and sort combo-boxes, never re-renders
         Label criteriaLabel = new Label("Select Dealership:");
         headerGrid.add(criteriaLabel, 0, 0);
-        ComboBox comboBox = new ComboBox();
-        comboBox.getItems().add(dealership1.getLocation());
-        comboBox.getItems().add(dealership2.getLocation());
-        comboBox.getItems().add(dealership3.getLocation());
-        comboBox.setValue(dealership1.getLocation());
+        ComboBox dealershipComboBox = new ComboBox();
+        dealershipComboBox.getItems().add(dealership1.getLocation());
+        dealershipComboBox.getItems().add(dealership2.getLocation());
+        dealershipComboBox.getItems().add(dealership3.getLocation());
+        dealershipComboBox.setValue(dealership1.getLocation());
         ComboBox sortComboBox = new ComboBox();
         sortComboBox.getItems().add("Brand");
         sortComboBox.getItems().add("Model");
@@ -202,22 +203,20 @@ public class JavaFX extends Application {
         sortComboBox.setValue("Brand");
         //event handler for both combo-boxes. Gets value from both and re-renders
         //based on the values.
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                for(int i = 0; i<allDealerships.size(); i++){
-                    if(allDealerships.get(i).getLocation() == comboBox.getValue()){
-                        Dealership currentDealership = allDealerships.get(i);
-                        currentDealership.sort(sortComboBox.getValue().toString());
-                        dealershipGrid.getChildren().clear();
-                        renderDealership(allDealerships.get(i), dealershipGrid, allDealerships);
-                    }
+        EventHandler<ActionEvent> event = e -> {
+            for(int i = 0; i<allDealerships.length; i++){
+                if(allDealerships[i].getLocation() == dealershipComboBox.getValue()){
+                    Dealership currentDealership = allDealerships[i];
+                    currentDealership.sort(sortComboBox.getValue().toString());
+                    dealershipGrid.getChildren().clear();
+                    renderDealership(allDealerships[i], dealershipGrid, allDealerships);
                 }
             }
         };
 
         // Set on action
-        comboBox.setOnAction(event);
-        headerGrid.add(comboBox, 1, 0);
+        dealershipComboBox.setOnAction(event);
+        headerGrid.add(dealershipComboBox, 1, 0);
         headerGrid.add(new Label("Sort Criteria: "),2,0);
         sortComboBox.setOnAction(event);
         headerGrid.add(sortComboBox,3,0);
@@ -245,9 +244,9 @@ public class JavaFX extends Application {
         //creates a car which is added to the dealership. the dealership is then re-rendered
         EventHandler<ActionEvent> addCar = e -> {
 
-            for(int i = 0; i<allDealerships.size(); i++){
-                if(allDealerships.get(i).getLocation() == comboBox.getValue()){
-                    Dealership currentDealership = allDealerships.get(i);
+            for(int i = 0; i<allDealerships.length; i++){
+                if(allDealerships[i].getLocation() == dealershipComboBox.getValue()){
+                    Dealership currentDealership = allDealerships[i];
                     if(brandInput.getText().toLowerCase().equals("ford")){
                         currentDealership.addCar(new Ford(modelInput.getText(), parseInt(yearInput.getText()), parseInt(milesInput.getText())));
                     }
@@ -259,7 +258,7 @@ public class JavaFX extends Application {
                     }
                     currentDealership.sort(sortComboBox.getValue().toString());
                     dealershipGrid.getChildren().clear();
-                    renderDealership(allDealerships.get(i), dealershipGrid, allDealerships);
+                    renderDealership(allDealerships[i], dealershipGrid, allDealerships);
                 }
             }
         };

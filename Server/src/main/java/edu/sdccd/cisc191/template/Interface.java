@@ -10,7 +10,7 @@ public interface Interface {
      * @return the get all cars returns an arraylist of all car objects added to the dealership
      * it returns the list in the order the objects were added or sorted
      */
-    public ArrayList<Car> getAllCars();
+    public Car[] getAllCars();
 
 
     /**

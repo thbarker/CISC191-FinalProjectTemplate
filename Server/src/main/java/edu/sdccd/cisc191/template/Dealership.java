@@ -1,7 +1,9 @@
 package edu.sdccd.cisc191.template;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import static java.lang.Integer.max;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -12,7 +14,7 @@ public class Dealership implements Interface {
     /**
      *instance variable that stores all cars in the dealership
      */
-    private ArrayList<Car> allCars = new ArrayList<>();
+    private Car[] allCars = new Car[0];
     /**
      * instance variable for the location
      */
@@ -29,16 +31,22 @@ public class Dealership implements Interface {
     /**
      * @return  @inheritDoc
      */
-    public ArrayList<Car> getAllCars(){
+    public Car[] getAllCars(){
         return allCars;
     }
 
     /**
-     * @param toAdd this method takes a car object and adds it to the end of the arraylist
+     * @param toAdd this method takes a car object and adds it to the end of the arraylist by expanding it
      */
     @Override
     public void addCar(Car toAdd){
-        allCars.add(toAdd);
+
+        Car[] destArray = new Car[allCars.length+1];
+        for(int i=0; i<allCars.length; i++){
+            destArray[i] = allCars[i];
+        }
+        destArray[destArray.length - 1] = toAdd;
+        allCars = destArray;
     }
 
     /**
@@ -49,12 +57,18 @@ public class Dealership implements Interface {
     }
 
     /**
-     * @param car used to remove a car from the arraylist.
-     *            The Car object that is passed into the method
-     *            must be the one in the arraylist
+     * @param car used to remove a car from the all cars array
      */
     public void removeCar(Car car){
-        allCars.remove(allCars.indexOf(car));
+        Car[] destArray = new Car[allCars.length - 1];
+
+        for (int i = 0, k = 0; i < allCars.length; i++) {
+            if (allCars[i] == car) {
+                continue;
+            }
+            destArray[k++] = allCars[i];
+        }
+        allCars = destArray;
     }
 
     /**
@@ -62,42 +76,53 @@ public class Dealership implements Interface {
      *                 there are 4 criteria, brand, model, year, and miles
      */
     public void sort(String criteria){
-        ArrayList<Car> tempArr = new ArrayList<>();
-        while(allCars.size()>0){
+        Car[] tempArr = new Car[allCars.length];
+        int index = 0;
+        while(allCars.length>0){
             int maxIndex = 0;
-            for(int i =0; i<allCars.size(); i++){
+            for(int i =0; i<allCars.length; i++){
                 if(criteria=="Brand"){
-                    String currentBrand = allCars.get(i).getBrand();
-                    String maxBrand = allCars.get(maxIndex).getBrand();
+                    String currentBrand = allCars[i].getBrand();
+                    String maxBrand = allCars[maxIndex].getBrand();
                     if(currentBrand.compareTo(maxBrand)<0){
                         maxIndex = i;
                     }
                 }
                 if(criteria=="Model"){
-                    String currentModel = allCars.get(i).getModel();
-                    String maxModel = allCars.get(maxIndex).getModel();
+                    String currentModel = allCars[i].getModel();
+                    String maxModel = allCars[maxIndex].getModel();
                     if(currentModel.compareTo(maxModel)<0){
                         maxIndex = i;
                     }
                 }
                 if(criteria=="Year"){
-                    int currentYear = parseInt(allCars.get(i).getYear());
-                    int maxYear = parseInt(allCars.get(maxIndex).getYear());
+                    int currentYear = parseInt(allCars[i].getYear());
+                    int maxYear = parseInt(allCars[maxIndex].getYear());
                     if(currentYear>maxYear){
                         maxIndex = i;
                     }
                 }
                 if(criteria=="Miles"){
-                    int currentMiles = parseInt(allCars.get(i).getMiles());
-                    int maxMiles = parseInt(allCars.get(maxIndex).getMiles());
+                    int currentMiles = parseInt(allCars[i].getMiles());
+                    int maxMiles = parseInt(allCars[maxIndex].getMiles());
                     if(currentMiles>maxMiles){
                         maxIndex = i;
                     }
                 }
             }
-            tempArr.add(allCars.get(maxIndex));
-            allCars.remove(maxIndex);
+            tempArr[index++] = allCars[maxIndex];
+            removeCar(allCars[maxIndex]);
         }
         allCars = tempArr;
+    }
+    public String toString(){
+        String ret = "[";
+        for(int i=0; i<allCars.length; i++){
+            ret+=allCars[i];
+            if(i<allCars.length-1){
+                ret+=", ";
+            }
+        }
+        return ret+"]";
     }
 }

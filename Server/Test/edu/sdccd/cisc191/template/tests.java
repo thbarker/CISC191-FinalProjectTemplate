@@ -16,10 +16,13 @@ class tests {
     void addCar() {
 
         Dealership tester = new Dealership("San Diego");
-        tester.addCar(new Ford("Bronco", 2017, 50000));
-        ArrayList<Car> returnVal = new ArrayList<>();
-        returnVal.add(new Ford("Bronco", 2017, 50000));
-        assertEquals( returnVal.toString(), tester.getAllCars().toString(), "should return an arraylist of 1 car");
+        Car carToAdd = new Ford("Bronco", 2017, 50000);
+        tester.addCar(carToAdd);
+
+        Car[] returnVal = new Car[1];
+        returnVal[0] = carToAdd;
+
+        assertEquals( returnVal[0], tester.getAllCars()[0]);
 
     }
 
@@ -29,7 +32,7 @@ class tests {
      */
     @Test
     void getOldestCarTest() {
-        ArrayList<Dealership> allDealerships = new ArrayList<>();
+        Dealership[] allDealerships = new Dealership[3];
         Dealership dealership1 = new Dealership("San Diego");
         Dealership dealership2 = new Dealership("Los Angeles");
         Dealership dealership3 = new Dealership("San Francisco");
@@ -47,9 +50,9 @@ class tests {
         dealership3.addCar(new Honda("Accord", 2017, 85000));
         dealership3.addCar(new Ford("Bronco", 2019, 40000));
 
-        allDealerships.add(dealership1);
-        allDealerships.add(dealership2);
-        allDealerships.add(dealership3);
+        allDealerships[0] = dealership1;
+        allDealerships[1] = dealership2;
+        allDealerships[2] = dealership3;
         Car oldestCar;
         oldestCar = JavaFX.getOldestCar(allDealerships);
         assertEquals(maxCar, oldestCar);
@@ -57,16 +60,20 @@ class tests {
     }
 
     /**
-     * Module 3: creates JavaFX object without error.
+     * Module 3: starts JavaFX without error.
      */
     @Test
     void JavaFXTest(){
-        JavaFX tester = new JavaFX();
+        String[] args = new String[] {""};
+        JavaFX.main(args);
     }
 
     /**
-     * Module 4: the Car class helps to simply the project by breaking up Server.java into objects which are easier to use
-     * Module 5: the Ford class inherits from the Car class, and then assigned as a Car, showing polymorphism.
+     * Module 4: apply object-oriented programming by breaking up Server.java into multiple Java classes:
+     * the Car class helps to simply the project by breaking up Server.java into objects which are easier to use
+     *
+     * Module 5: Inheritance, Polymorphism, Abstract Classes:
+     * the Ford class inherits from the Car class, and then assigned as a Car, showing polymorphism.
      */
     @Test
     void carTest(){
@@ -88,7 +95,7 @@ class tests {
         ArrayList<Car> returnVal = new ArrayList<>();
         returnVal.add(new Ford("Bronco", 2017, 50000));
         returnVal.add(new Toyota("Highlander", 2012, 90000));
-        assertEquals( returnVal.toString(), tester.getAllCars().toString(), "should return an arraylist of 2 cars");
+        assertEquals( returnVal.toString(), tester.toString(), "should return an arraylist of 2 cars");
     }
 
 
@@ -105,11 +112,11 @@ class tests {
         tester.addCar(new Ford("Bronco", 2017, 50000));
         tester.addCar(new Toyota("Highlander", 2012, 90000));
 
-        tester.removeCar(tester.getAllCars().get(1));
+        tester.removeCar(tester.getAllCars()[1]);
 
         ArrayList<Car> returnVal = new ArrayList<>();
         returnVal.add(new Ford("Bronco", 2017, 50000));
-        assertEquals( returnVal.toString(), tester.getAllCars().toString(), "should remove the car");
+        assertEquals( returnVal.toString(), tester.toString(), "should remove the car");
     }
 
     @Test
@@ -121,13 +128,13 @@ class tests {
         tester.addCar(new Toyota("Highlander", 2010, 76000));
         tester.sort("Miles");
 
-        ArrayList<Car> returnVal = new ArrayList<>();
-        returnVal.add(new Toyota("Highlander", 2007, 150000));
-        returnVal.add(new Toyota("Highlander", 2012, 90000));
-        returnVal.add(new Toyota("Highlander", 2010, 76000));
-        returnVal.add(new Ford("Bronco", 2017, 50000));
+        Car[] returnVal = new Car[4];
+        returnVal[0] = (new Toyota("Highlander", 2007, 150000));
+        returnVal[1] = (new Toyota("Highlander", 2012, 90000));
+        returnVal[2] = (new Toyota("Highlander", 2010, 76000));
+        returnVal[3] = (new Ford("Bronco", 2017, 50000));
 
-        assertEquals( returnVal.toString(), tester.getAllCars().toString(), "should return in order of miles");
+        assertEquals( returnVal[0].toString(), tester.getAllCars()[0].toString(), "should return in order of miles");
     }
 
 }
