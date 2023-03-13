@@ -58,6 +58,7 @@ public class CalendarController
      * hasEvent method to return the boolean value representing
      * if the Calendar has an event on a given date.
      * @param d is the date to check for
+     * @return boolean for if the date has an Event
      */
     public boolean hasEvent(Date d)
     {
@@ -71,6 +72,7 @@ public class CalendarController
 
     /**
      * This method returns today's date
+     * @return Date of today's current date
      */
     public Date getToday()
     {
@@ -78,7 +80,8 @@ public class CalendarController
     }
 
     /**
-     * This method returns the current Dat
+     * This method returns the current Date
+     * @return currentDate
      */
     public Date getCurrentDate()
     {
@@ -126,6 +129,7 @@ public class CalendarController
     }
     /**
      * This method returns the String of the Current Month
+     * @return String of the month name in alphabetical context
      */
     public String getMonthAlpha()
     {
@@ -152,6 +156,7 @@ public class CalendarController
 
     /**
      * This method returns the current Date's year as an int
+     * @return int for the current year
      */
     public int getCurrentYear()
     {
@@ -159,7 +164,8 @@ public class CalendarController
     }
 
     /**
-     This method returns the Date of the first of the current month
+     * This method returns the Date of the first of the current month
+     * @return Date of the first sunday of the current month to display
      */
     private Date getFirstSunday()
     {
@@ -195,6 +201,7 @@ public class CalendarController
      * at i,j
      * @param i is the first index
      * @param j is the second index
+     * @return Date which is the date at the index i,j
      */
     public Date getDate(int i, int j)
     {
@@ -231,7 +238,7 @@ public class CalendarController
     /**
      * This method returns a String Arraylist with all the info for
      * Events on the Current Day
-     * @return ArrayList<String> with 2 parts seperated by a ","
+     * @return ArrayList of type String with 2 parts seperated by a ","
      *         The title and the location
      */
     public ArrayList<String> getCurrentEvents()

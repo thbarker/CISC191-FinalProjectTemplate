@@ -46,6 +46,7 @@ public class Event
     }
     /**
      * This getter method returns the date of the Event
+     * @return the Date of the event
      */
     public Date getStart()
     {

@@ -30,9 +30,13 @@ public class MainWindow extends Application {
     private Stage window;
     private DayButton[][] dayButtons = new DayButton[6][7];
 
+    public MainWindow()
+    {
+
+    }
     /**
      * Main Method calls the launch method from MainWindow
-     * @param args
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
@@ -59,7 +63,7 @@ public class MainWindow extends Application {
      * This method generates all the details and aspects of the
      * MainWindow.
      */
-    private void generateMainScene() {
+    public void generateMainScene() {
 
         HBox root = new HBox(); //Root to be set to the scene, will contain calendar and sidebar
 
@@ -79,6 +83,8 @@ public class MainWindow extends Application {
         day.setPadding(new Insets(0));
 
         grid = new VBox(); //VBox that contains the grid display of the days in the Calendar
+        eventArea = new VBox(); //VBox that contains the Events listed out in sidebar
+        initEventArea();
         update();
 
         BackButton back = new BackButton();
@@ -109,9 +115,6 @@ public class MainWindow extends Application {
          */
 
         VBox sideBar = new VBox(); //HBox to contain bottom buttons
-
-        eventArea = new VBox(); //VBox that contains the Events listed out in sidebar
-        initEventArea();
 
         Button addEvent = new Button(); //Add Event Button
         Button todayButton = new Button(); //Go to Today Button
@@ -292,7 +295,7 @@ public class MainWindow extends Application {
     /**
      * This Method initializes the Event Area
      */
-    private void initEventArea()
+    public void initEventArea()
     {
         eventArea.setMaxWidth(300);
         eventArea.setMaxHeight(400);
