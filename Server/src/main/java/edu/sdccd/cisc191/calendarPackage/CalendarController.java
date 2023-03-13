@@ -126,6 +126,7 @@ public class CalendarController
         }
         else
             currentDate.setMonth(currentDate.getMonth() - 1);
+        updateArray();
     }
     /**
      * This method returns the String of the Current Month
