@@ -314,11 +314,11 @@ public class MainWindow extends Application {
             Label title = new Label(temp.get(i).substring(0,spot));
             title.setFont(new Font("Cambria", 15));
             Label location = new Label();
-            if(temp.get(i).substring(spot+1,temp.get(i).length()) == "")
-            {
+            if(spot+1==temp.get(i).length())
+                location.setText("");
+            else
                 location.setText("Location: " + temp.get(i).substring(spot + 1, temp.get(i).length()));
-                location.setFont(new Font("Cambria", 10));
-            }
+            location.setFont(new Font("Cambria", 10));
             VBox smallBox = new VBox();
             smallBox.getChildren().addAll(title,location);
             eventArea.getChildren().add(smallBox);
