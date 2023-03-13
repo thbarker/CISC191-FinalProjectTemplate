@@ -324,5 +324,4 @@ public class MainWindow extends Application {
             eventArea.getChildren().add(smallBox);
         }
     }
-
 }
