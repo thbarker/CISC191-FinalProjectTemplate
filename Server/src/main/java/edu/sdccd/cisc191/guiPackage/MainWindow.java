@@ -1,3 +1,6 @@
+/**
+ * Created by Teddy Barker
+ */
 package edu.sdccd.cisc191.guiPackage;
 
 import edu.sdccd.cisc191.calendarPackage.CalendarController;
