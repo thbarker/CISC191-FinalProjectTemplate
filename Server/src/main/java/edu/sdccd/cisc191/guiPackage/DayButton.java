@@ -20,7 +20,9 @@ public class DayButton extends Button
         this.setText(Integer.toString(date.getDate()));
         if(month == d.getMonth())
         {
-            if(date.getTime() == cal.getCurrentDate().getTime())
+            if(date.getDate() == cal.getCurrentDate().getDate()
+                    && date.getMonth() == cal.getCurrentDate().getMonth()
+                    && date.getYear() == cal.getCurrentDate().getYear())
                 setCurrentStyle();
             else
                 setDefaultStyle();

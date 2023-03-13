@@ -182,7 +182,7 @@ public class CalendarController
      * This method updates the CalendarController's 2D Date Array
      * with the correct values to be displayed
      */
-    private void updateArray()
+    public void updateArray()
     {
         long millisecondsInADay = 1000 * 60 * 60 * 24;
         dateArray = new Date[6][7];
@@ -215,6 +215,7 @@ public class CalendarController
     public void today()
     {
         currentDate = new Date(today.getTime());
+        updateArray();
     }
 
     /**
