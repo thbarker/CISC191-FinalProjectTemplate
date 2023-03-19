@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,6 +53,7 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         myCalendar = new CalendarController();
+        load("saveFile.txt");
         window = primaryStage;
 
         window.setTitle("Calendar");
@@ -59,6 +61,10 @@ public class MainWindow extends Application {
         generateMainScene();
 
         window.setScene(mainScene);
+        window.setOnCloseRequest(e-> {
+                    save("saveFile.txt");
+                    window.close();
+                });
         window.show();
         window.setResizable(false);
     }
@@ -121,12 +127,18 @@ public class MainWindow extends Application {
 
         Button addEvent = new Button(); //Add Event Button
         Button todayButton = new Button(); //Go to Today Button
+        Button deleteEvent = new Button(); //Delete Event Button
+        Button clear = new Button(); //Clear Calendar Button
 
         styleButton(addEvent);
         styleButton(todayButton);
+        styleButton(deleteEvent);
+        styleButton(clear);
 
         addEvent.setText("Add Event");
         todayButton.setText("Go to Today");
+        deleteEvent.setText("Delete Event");
+        clear.setText("Clear Calendar");
 
         TextField titleField = new TextField(); //Event Title Text Field
         titleField.setText("New Event");
@@ -149,9 +161,18 @@ public class MainWindow extends Application {
             myCalendar.today();
             update();
         });
+        deleteEvent.setOnAction(e -> {
+            DeleteGUI deleteGUI = new DeleteGUI();
+            deleteGUI.display(myCalendar);
+            update();
+        });
+        clear.setOnAction(e -> {
+            myCalendar = new CalendarController();
+            update();
+        });
 
         //PROCESSING - adding nodes to the sidebar and aligning
-        sideBar.getChildren().addAll(day, eventArea, todayButton, titleField, locationField, addEvent);
+        sideBar.getChildren().addAll(day, eventArea, todayButton, titleField, locationField, addEvent, deleteEvent, clear);
 
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.setSpacing(20);
@@ -309,22 +330,93 @@ public class MainWindow extends Application {
 
         eventArea.getChildren().clear();
 
-        ArrayList<String> temp  = new ArrayList();
+        ArrayList<Event> temp  = new ArrayList();
         temp = myCalendar.getCurrentEvents();
         for(int i = 0; i < temp.size(); i++)
         {
-            int spot = temp.get(i).indexOf(",");
-            Label title = new Label(temp.get(i).substring(0,spot));
+            Label title = new Label(temp.get(i).getTitle());
             title.setFont(new Font("Cambria", 15));
             Label location = new Label();
-            if(spot+1==temp.get(i).length())
-                location.setText("");
+            if(temp.get(i).getLocation().length() == 0)
+                location.setText(temp.get(i).getLocation());
             else
-                location.setText("Location: " + temp.get(i).substring(spot + 1, temp.get(i).length()));
+                location.setText("Location: " + temp.get(i).getLocation());
             location.setFont(new Font("Cambria", 10));
             VBox smallBox = new VBox();
             smallBox.getChildren().addAll(title,location);
             eventArea.getChildren().add(smallBox);
         }
+    }
+
+    /**
+     * This method loads the events stored on the computer
+     * and adds them to the calendar.
+     * @param fileName is the file to be loaded from
+     */
+    public void load(String fileName)
+    {
+        myCalendar = new CalendarController();
+        String temp;
+        try
+        {
+            BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
+            while((temp = reader.readLine()) != null)
+            {
+                int num1, num2, m,d,y;
+                String title,location;
+                title = ""; location = "";
+                num1 = temp.indexOf("-");
+                m = Integer.parseInt(temp.substring(0,num1));
+                num2 = temp.indexOf("-", num1 + 1);
+                d = Integer.parseInt(temp.substring(num1+1,num2));
+                num1 = temp.indexOf(",", num2);
+                y = Integer.parseInt(temp.substring(num2+1,num1));
+
+                Date date = new Date();
+                date.setDate(d);
+                date.setMonth(m);
+                date.setYear(y);
+
+                num2 = temp.indexOf(",", num1+1);
+                title = temp.substring(num1+1, num2);
+                if(num2 != temp.length()-1)
+                    location = temp.substring(num2+1,temp.length());
+                myCalendar.addEvent(new Event(title,location,date));
+            }
+            reader.close();
+        }
+        catch(IOException e) {}
+    }
+
+    /**
+     * This method saves all the events currently stored in the calendar
+     * to the computer in order for them to be reloaded at another launch
+     * of the program.
+     * @param fileName is the file that is used to save the event list to
+     */
+    public void save(String fileName)
+    {
+        String temp;
+        try
+        {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(fileName)));
+            for(int i = 0; i < myCalendar.size(); i++)
+            {
+                temp = "";
+                temp += myCalendar.getEvent(i).getStart().getMonth();
+                temp += "-";
+                temp += myCalendar.getEvent(i).getStart().getDate();
+                temp += "-";
+                temp += myCalendar.getEvent(i).getStart().getYear();
+                temp += ",";
+                temp += myCalendar.getEvent(i).getTitle();
+                temp += ",";
+                temp += myCalendar.getEvent(i).getLocation();
+                temp += "\n";
+                writer.write(temp);
+            }
+            writer.close();
+        }
+        catch(IOException e) {}
     }
 }

@@ -223,7 +223,7 @@ public class CalendarController
      * @param index is the index of the Arraylist eventList
      * @return Event of whatever index was passed
      */
-    private Event getEvent(int index)
+    public Event getEvent(int index)
     {
         return eventList.get(index);
     }
@@ -232,7 +232,7 @@ public class CalendarController
      * This method returns an int to represent the size of the eventList
      * @return int as the current Size of EventList
      */
-    private int size()
+    public int size()
     {
         return eventList.size();
     }
@@ -243,13 +243,13 @@ public class CalendarController
      * @return ArrayList of type String with 2 parts seperated by a ","
      *         The title and the location
      */
-    public ArrayList<String> getCurrentEvents()
+    public ArrayList<Event> getCurrentEvents()
     {
-        ArrayList<String> list  = new ArrayList();
+        ArrayList<Event> list  = new ArrayList();
         for(int i = 0; i < eventList.size(); i++)
         {
             if(eventList.get(i).sameDate(currentDate))
-                list.add(eventList.get(i).getTitle() + "," + eventList.get(i).getLocation());
+                list.add(eventList.get(i));
         }
         return list;
     }
