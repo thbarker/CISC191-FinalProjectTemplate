@@ -352,6 +352,10 @@ public class MainWindow extends Application {
         }
     }
 
+    /**
+     * This method updates the Style for all the Events shown in
+     * the sideBar
+     */
     public void updateEvents()
     {
         for(EventLabel e : todaysEvents)

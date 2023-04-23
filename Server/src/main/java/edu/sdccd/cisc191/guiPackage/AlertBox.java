@@ -1,21 +1,21 @@
 package edu.sdccd.cisc191.guiPackage;
 
-import edu.sdccd.cisc191.calendarPackage.CalendarController;
-import edu.sdccd.cisc191.calendarPackage.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class AlertBox
 {
+    /**
+     * This is a static method that displays a message to user
+     * through an Alert Box
+     * @param message is the text to be displayed
+     */
     public static void display(String message)
     {
         Stage window = new Stage();

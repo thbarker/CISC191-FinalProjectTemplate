@@ -14,6 +14,15 @@ public class DayButton extends Button
     private boolean disabled;
     private boolean current;
 
+    /**
+     * This is the constructor for this class that takes 3 arguments
+     * and initializes the DayButton to the correct values
+     * @param d is the date that the button will have
+     * @param month is the month that the button will display with
+     * @param cal is the Calendar Controller than will control the Day
+     *            Buttons
+     */
+
     public DayButton(Date d, int month, CalendarController cal)
     {
         date = d;
@@ -48,16 +57,27 @@ public class DayButton extends Button
         this.setAlignment(Pos.TOP_CENTER);
     }
 
+    /**
+     * Setter for the Date
+     * @param d is the date to set
+     */
     public void setDate(Date d)
     {
         date = d;
     }
-
+    /**
+     * Getter for the Date
+     * @return the date to get
+     */
     public Date getDate()
     {
         return date;
     }
 
+    /**
+     * This method takes one argument and handles a DayButton Click
+     * @param cal is the Calendar Controller to be manipulated
+     */
     public void handleClick(CalendarController cal)
     {
         if(!disabled)
@@ -71,6 +91,9 @@ public class DayButton extends Button
 
     }
 
+    /**
+     * This method sets the style of the DayButton to a selected state
+     */
     public void setCurrentStyle()
     {
         setStyle("-fx-background-color: rgba(234,234,234,0);" +
@@ -94,6 +117,9 @@ public class DayButton extends Button
         });
     }
 
+    /**
+     * This method sets the style of the DayButton to an unselected state
+     */
     public void setDefaultStyle()
     {
         setStyle("-fx-background-color: rgba(234,234,234,0);" +
@@ -117,6 +143,9 @@ public class DayButton extends Button
         });
     }
 
+    /**
+     * This method sets the style of the DayButton to a disable state
+     */
     private void setDisabledStyle()
     {
         setStyle("-fx-background-color: rgba(0,0,0,0.31);" +
@@ -126,6 +155,10 @@ public class DayButton extends Button
                 "-fx-pref-height: 100px;");
     }
 
+    /**
+     * Getter for disabled
+     * @return disabled boolean
+     */
     public boolean disabled()
     {
         return disabled;

@@ -63,28 +63,52 @@ public class Event
     }
     /**
      * This method will check if a calling Event takes place before
-     * than the passed argument event
+     * than the passed argument event. Order of precedence goes date
+     * (day month year), then title (alphabetical), then location (alphabetical).
      * @param eventP is the event to be checked with the calling
      *               object
-     * @return the bool value for if the calling object is before
+     * @return the bool value for if the calling object is before.
+     *         If they are the same event, it returns true
      */
     public boolean before(Event eventP)
     {
-        if (this.start.before(eventP.start))
+        if(this.sameDate(eventP.getStart()))
+        {
+           if(this.getTitle().compareTo(eventP.getTitle()) == 0)
+           {
+               if(this.getLocation().compareTo(eventP.getLocation()) <= 0)
+                   return true;
+           }
+           else if(this.getTitle().compareTo(eventP.getTitle()) < 0)
+               return true;
+        }
+        else if(this.getStart().before(eventP.getStart()))
             return true;
         return false;
     }
 
     /**
      * This method will check if a calling Event takes place after
-     * than the passed argument event
+     * than the passed argument event. Order of precedence goes date
+     * (day month year), then title (alphabetical), then location (alphabetical).
      * @param eventP is the event to be checked with the calling
      *               object
      * @return the bool value for if the calling object is after
+     *         If they are the same event, it returns true
      */
     public boolean after(Event eventP)
     {
-        if (this.start.after(eventP.start))
+        if(this.sameDate(eventP.getStart()))
+        {
+            if(this.getTitle().compareTo(eventP.getTitle()) == 0)
+            {
+                if(this.getLocation().compareTo(eventP.getLocation()) >= 0)
+                    return true;
+            }
+            else if(this.getTitle().compareTo(eventP.getTitle()) > 0)
+                return true;
+        }
+        else if(this.getStart().after(eventP.getStart()))
             return true;
         return false;
     }

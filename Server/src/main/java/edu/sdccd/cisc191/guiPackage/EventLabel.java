@@ -12,6 +12,11 @@ public class EventLabel extends Button
     private Label title;
     private Label location;
     private Event event;
+
+    /**
+     * Constructor initializes the Event Label with an event
+     * @param event is event to be labeled
+     */
     public EventLabel(Event event)
     {
         this.event = event;
@@ -32,6 +37,10 @@ public class EventLabel extends Button
         this.unselected();
     }
 
+    /**
+     * This method takes no arguments and sets the state of the
+     * EventLabel to selected, which makes it indefinitely bold
+     */
     public void selected()
     {
         this.setOnMouseExited(e -> {
@@ -43,6 +52,9 @@ public class EventLabel extends Button
         });
     }
 
+    /**
+     * This method takes no arguments and removes the bold feature
+     */
     public void unselected()
     {
         this.setGraphic(setText(false));
@@ -54,6 +66,14 @@ public class EventLabel extends Button
             this.setGraphic(setText(false));
         });
     }
+
+    /**
+     * This method sets the Text for the EventLabel
+     * @param bold is the bool if it is to be bolded or not
+     * @return a VBox containing the Title and Location labels
+     *         that is meant to be set as a graphic to the
+     *         EventLabel
+     */
     private VBox setText(boolean bold)
     {
         VBox vbox = new VBox();
@@ -75,19 +95,30 @@ public class EventLabel extends Button
             location.setFont(new Font("Cambria", 15));
             title.setFont(new Font("Cambria", 20));
         }
+        vbox.getChildren().add(location);
         return vbox;
     }
 
+    /**
+     * Getter for Title
+     * @return title
+     */
     public Label getTitle()
     {
         return title;
     }
-
+    /**
+     * Getter for Location
+     * @return location
+     */
     public Label getLocation()
     {
         return location;
     }
-
+    /**
+     * Getter for Event
+     * @return event
+     */
     public Event getEvent()
     {
         return event;

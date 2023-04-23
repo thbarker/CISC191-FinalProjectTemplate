@@ -5,8 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
-import java.util.Date;
-
 /**
  * This Class extends from the JavaFX Button Class and implements stylist
  * and functional changes that allow it to perform the role of a back button.

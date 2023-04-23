@@ -265,6 +265,14 @@ public class CalendarController
         return binarySearch(eventList, e,0, eventList.size() - 1);
     }
 
+    /**
+     * This is a helper method for the find method that implements a recursive binary search
+     * @param eventList is the arraylist of type Event to search
+     * @param e is the event to search for
+     * @param left is the beginning element to search for
+     * @param right is the final element to search for
+     * @return the index of the event's first appearance, -1 if not found
+     */
     private int binarySearch(ArrayList<Event> eventList, Event e, int left, int right)
     {
         if (left > right) {
@@ -275,7 +283,7 @@ public class CalendarController
 
         if (eventList.get(mid).sameEvent(e))
             return mid;
-        else if (eventList.get(mid).after(e))
+        else if (eventList.get(mid).before(e))
             return binarySearch(eventList, e, mid + 1, right);
         else
             return binarySearch(eventList, e, left, mid - 1);
