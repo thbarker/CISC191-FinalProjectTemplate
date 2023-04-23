@@ -1,5 +1,6 @@
 package edu.sdccd.cisc191.calendarPackage;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * This Class extends represents a single event that
@@ -100,6 +101,14 @@ public class Event
         return d.getDate() == this.getStart().getDate()
                 && d.getMonth() == this.getStart().getMonth()
                 && d.getYear() == this.getStart().getYear();
+    }
+
+    public boolean sameEvent(Event e)
+    {
+        return e.sameDate(this.getStart())
+                && Objects.equals(e.getTitle(), this.title)
+                && Objects.equals(e.getLocation(), this.location);
+
     }
 
 }

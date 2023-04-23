@@ -253,4 +253,42 @@ public class CalendarController
         }
         return list;
     }
+
+    /**
+     * This method searches the Calendar's eventList arrayList
+     * and returns the index of the first appearance of Event e
+     * @param e is the event to search for
+     * @return index that the first appearance is. -1 if not found
+     */
+    public int find(Event e)
+    {
+        return binarySearch(eventList, e,0, eventList.size() - 1);
+    }
+
+    private int binarySearch(ArrayList<Event> eventList, Event e, int left, int right)
+    {
+        if (left > right) {
+            return -1; // target not found
+        }
+
+        int mid = (left + right) / 2;
+
+        if (eventList.get(mid).sameEvent(e))
+            return mid;
+        else if (eventList.get(mid).after(e))
+            return binarySearch(eventList, e, mid + 1, right);
+        else
+            return binarySearch(eventList, e, left, mid - 1);
+
+    }
+    /**
+     * This method removes an Event from the list
+     * @param index is the index of the Event to be removed
+     */
+    public void remove(int index)
+    {
+        if(index < 0 || index >= eventList.size())
+            return;
+        eventList.remove(index);
+    }
 }

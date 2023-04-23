@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 
 /**
  * This class extends from the JavaFX Application class.
@@ -27,8 +28,10 @@ import java.util.Date;
 public class MainWindow extends Application {
     private HeaderLabel month, day;
     private DaysOfWeek days;
-    private VBox eventArea;
     private CalendarController myCalendar;
+    private Event currentEvent;
+    private LinkedList<EventLabel> todaysEvents;
+    private VBox eventArea;
     private VBox grid;
     private Scene mainScene;
     private Stage window;
@@ -93,7 +96,6 @@ public class MainWindow extends Application {
 
         grid = new VBox(); //VBox that contains the grid display of the days in the Calendar
         eventArea = new VBox(); //VBox that contains the Events listed out in sidebar
-        initEventArea();
         update();
 
         BackButton back = new BackButton();
@@ -153,17 +155,24 @@ public class MainWindow extends Application {
 
         //PROCESSING - handling button Actions
         addEvent.setOnAction(e -> {
-            Date temp = new Date(myCalendar.getCurrentDate().getTime());
-            myCalendar.addEvent(new Event(titleField.getText(), locationField.getText(), temp));
-            update();
+            if(myCalendar.getCurrentEvents().size() == 8)
+            {
+                AlertBox.display("Too many events.");
+            }
+            else
+            {
+                Date temp = new Date(myCalendar.getCurrentDate().getTime());
+                myCalendar.addEvent(new Event(titleField.getText(), locationField.getText(), temp));
+                update();
+            }
         });
         todayButton.setOnAction(e -> {
             myCalendar.today();
             update();
         });
         deleteEvent.setOnAction(e -> {
-            DeleteGUI deleteGUI = new DeleteGUI();
-            deleteGUI.display(myCalendar);
+            if(currentEvent != null)
+                myCalendar.remove(myCalendar.find(currentEvent));
             update();
         });
         clear.setOnAction(e -> {
@@ -329,22 +338,28 @@ public class MainWindow extends Application {
         eventArea.setSpacing(10);
 
         eventArea.getChildren().clear();
-
-        ArrayList<Event> temp  = new ArrayList();
-        temp = myCalendar.getCurrentEvents();
+        todaysEvents  = new LinkedList<>();
+        ArrayList<Event> temp = myCalendar.getCurrentEvents();
         for(int i = 0; i < temp.size(); i++)
         {
-            Label title = new Label(temp.get(i).getTitle());
-            title.setFont(new Font("Cambria", 15));
-            Label location = new Label();
-            if(temp.get(i).getLocation().length() == 0)
-                location.setText(temp.get(i).getLocation());
+            todaysEvents.add(new EventLabel(temp.get(i)));
+            Event tempEvent = temp.get(i);
+            todaysEvents.get(i).setOnAction(e->{
+                currentEvent = tempEvent;
+                updateEvents();
+            });
+            eventArea.getChildren().add(todaysEvents.get(i));
+        }
+    }
+
+    public void updateEvents()
+    {
+        for(EventLabel e : todaysEvents)
+        {
+            if(currentEvent == e.getEvent())
+                e.selected();
             else
-                location.setText("Location: " + temp.get(i).getLocation());
-            location.setFont(new Font("Cambria", 10));
-            VBox smallBox = new VBox();
-            smallBox.getChildren().addAll(title,location);
-            eventArea.getChildren().add(smallBox);
+                e.unselected();
         }
     }
 
