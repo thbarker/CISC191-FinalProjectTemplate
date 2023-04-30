@@ -44,10 +44,6 @@ public class Server {
     }
 
     public static void main(String[] args) {
-
-        JavaFX javaFX = new JavaFX();
-        javaFX.main(args);
-
         Server server = new Server();
         try {
             server.start(4444);
