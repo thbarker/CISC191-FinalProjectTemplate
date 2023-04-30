@@ -1,5 +1,8 @@
 package edu.sdccd.cisc191.template;
 
+import edu.sdccd.cisc191.guiPackage.*;
+import jdk.jfr.internal.tool.Main;
+
 import java.net.*;
 import java.io.*;
 
