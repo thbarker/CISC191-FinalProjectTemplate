@@ -130,16 +130,19 @@ public class MainWindow extends Application {
         Button addEvent = new Button(); //Add Event Button
         Button todayButton = new Button(); //Go to Today Button
         Button deleteEvent = new Button(); //Delete Event Button
+        Button printAllEvents = new Button(); //print all events button
         Button clear = new Button(); //Clear Calendar Button
 
         styleButton(addEvent);
         styleButton(todayButton);
         styleButton(deleteEvent);
+        styleButton(printAllEvents);
         styleButton(clear);
 
         addEvent.setText("Add Event");
         todayButton.setText("Go to Today");
         deleteEvent.setText("Delete Event");
+        printAllEvents.setText("Print all events");
         clear.setText("Clear Calendar");
 
         TextField titleField = new TextField(); //Event Title Text Field
@@ -175,13 +178,17 @@ public class MainWindow extends Application {
                 myCalendar.remove(myCalendar.find(currentEvent));
             update();
         });
+        printAllEvents.setOnAction(e->{
+            myCalendar.printAllEvents();
+            update();
+        });
         clear.setOnAction(e -> {
             myCalendar = new CalendarController();
             update();
         });
 
         //PROCESSING - adding nodes to the sidebar and aligning
-        sideBar.getChildren().addAll(day, eventArea, todayButton, titleField, locationField, addEvent, deleteEvent, clear);
+        sideBar.getChildren().addAll(day, eventArea, todayButton, titleField, locationField, addEvent, deleteEvent, printAllEvents, clear);
 
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.setSpacing(20);

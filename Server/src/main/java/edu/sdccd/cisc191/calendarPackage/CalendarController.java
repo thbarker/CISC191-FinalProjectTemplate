@@ -299,4 +299,9 @@ public class CalendarController
             return;
         eventList.remove(index);
     }
+    public void printAllEvents(){
+        for(Event e:eventList){
+            System.out.println(e);
+        }
+    }
 }

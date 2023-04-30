@@ -132,7 +132,8 @@ public class Event
         return e.sameDate(this.getStart())
                 && Objects.equals(e.getTitle(), this.title)
                 && Objects.equals(e.getLocation(), this.location);
-
     }
-
+    public String toString(){
+        return start+": "+title+" at "+location;
+    }
 }
