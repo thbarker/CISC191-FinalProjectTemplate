@@ -159,6 +159,10 @@ public class MainWindow extends Application {
             {
                 AlertBox.display("Too many events.");
             }
+            else if(titleField.getText().isEmpty())
+            {
+                AlertBox.display("Title is Empty.");
+            }
             else
             {
                 Date temp = new Date(myCalendar.getCurrentDate().getTime());

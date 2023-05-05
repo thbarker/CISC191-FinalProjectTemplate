@@ -11,7 +11,7 @@ public class DayButton extends Button
 {
 
     private Date date;
-    private boolean disabled;
+    private final boolean disabled;
     private boolean current;
 
     /**
@@ -101,20 +101,16 @@ public class DayButton extends Button
                 "-fx-border-width: 3px; " +
                 "-fx-pref-width: 125px; " +
                 "-fx-pref-height: 100px;");
-        setOnMouseEntered(e -> {
-            setStyle("-fx-background-color: rgba(0,0,0,0.1);" +
+        setOnMouseEntered(e -> setStyle("-fx-background-color: rgba(0,0,0,0.1);" +
                     " -fx-border-color: #00428d; " +
                     "-fx-border-width: 3px; " +
                     "-fx-pref-width: 125px; " +
-                    "-fx-pref-height: 100px;");
-        });
-        setOnMouseExited(e -> {
-            setStyle("-fx-background-color: rgba(234,234,234,0);" +
+                    "-fx-pref-height: 100px;"));
+        setOnMouseExited(e ->setStyle("-fx-background-color: rgba(234,234,234,0);" +
                     " -fx-border-color: #00428d; " +
                     "-fx-border-width: 3px; " +
                     "-fx-pref-width: 125px; " +
-                    "-fx-pref-height: 100px;");
-        });
+                    "-fx-pref-height: 100px;"));
     }
 
     /**
@@ -127,20 +123,16 @@ public class DayButton extends Button
                 "-fx-border-width: 1px; " +
                 "-fx-pref-width: 125px; " +
                 "-fx-pref-height: 100px;");
-        setOnMouseEntered(e -> {
-            setStyle("-fx-background-color: rgba(0,0,0,0.1);" +
+        setOnMouseEntered(e -> setStyle("-fx-background-color: rgba(0,0,0,0.1);" +
                     " -fx-border-color: #1a1a1a; " +
                     "-fx-border-width: 1px; " +
                     "-fx-pref-width: 125px; " +
-                    "-fx-pref-height: 100px;");
-        });
-        setOnMouseExited(e -> {
-            setStyle("-fx-background-color: rgba(196,196,196,0);" +
+                    "-fx-pref-height: 100px;"));
+        setOnMouseExited(e -> setStyle("-fx-background-color: rgba(196,196,196,0);" +
                     " -fx-border-color: #1a1a1a; " +
                     "-fx-border-width: 1px; " +
                     "-fx-pref-width: 125px; " +
-                    "-fx-pref-height: 100px;");
-        });
+                    "-fx-pref-height: 100px;"));
     }
 
     /**

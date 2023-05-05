@@ -78,14 +78,14 @@ public class EventLabel extends Button
     {
         VBox vbox = new VBox();
         vbox.getChildren().add(title);
-        if(location.getText() != "")
+        if(!location.getText().equals(""))
         {
             if (location.getText().charAt(0) != '\t')
                 location = new Label("\t" + location.getText());
             else
                 location = new Label(location.getText());
         }
-        if(bold == true)
+        if(bold)
         {
             location.setFont(Font.font("Cambria", FontWeight.BOLD, 15));
             title.setFont(Font.font("Cambria", FontWeight.BOLD, 20));
