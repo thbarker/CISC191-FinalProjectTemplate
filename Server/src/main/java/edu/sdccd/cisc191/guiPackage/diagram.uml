@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="475.5" y="477.5">edu.sdccd.cisc191.guiPackage.DayButton</node>
+    <node x="-407.0" y="37.5">edu.sdccd.cisc191.calendarPackage.Event</node>
+    <node x="255.5" y="137.0">edu.sdccd.cisc191.guiPackage.BackButton</node>
+    <node x="-148.5" y="137.0">edu.sdccd.cisc191.guiPackage.HeaderLabel</node>
+    <node x="515.5" y="137.0">edu.sdccd.cisc191.guiPackage.NextButton</node>
+    <node x="54.5" y="48.5">edu.sdccd.cisc191.guiPackage.EventLabel</node>
+    <node x="-165.5" y="334.5">edu.sdccd.cisc191.guiPackage.MainWindow</node>
+    <node x="-157.5" y="-43.0">edu.sdccd.cisc191.guiPackage.AlertBox</node>
+    <node x="310.5" y="589.5">edu.sdccd.cisc191.guiPackage.DaysOfWeek</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Compact" zoom="0.9252934898612594" showDependencies="false" x="66.5" y="425.5" />
+  <SelectedNodes>
+    <node>edu.sdccd.cisc191.calendarPackage.Event</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

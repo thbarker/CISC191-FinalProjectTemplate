@@ -238,9 +238,18 @@ public class CalendarController
     }
 
     /**
-     * This method returns a String Arraylist with all the info for
+     * This is a getter for the eventList field
+     * @return ArrayList of type Event of all the events in the list
+     */
+    public ArrayList<Event> getEventList()
+    {
+        return eventList;
+    }
+
+    /**
+     * This method returns an Event Arraylist with all the info for
      * Events on the Current Day
-     * @return ArrayList of type String with 2 parts seperated by a ","
+     * @return ArrayList of type Event with 2 parts seperated by a ","
      *         The title and the location
      */
     public ArrayList<Event> getCurrentEvents()
