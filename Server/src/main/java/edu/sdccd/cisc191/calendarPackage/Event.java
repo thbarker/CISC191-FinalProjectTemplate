@@ -113,8 +113,8 @@ public class Event
         return false;
     }
     /**
-     * This method will check if a calling Event takes place after
-     * than the passed argument event
+     * This method will check if a calling Event takes place at the same
+     * time as the passed argument date
      * @param d is the Date to be checked with the calling
      *               object
      * @return the bool value for if the calling object has the same date
@@ -126,13 +126,34 @@ public class Event
                 && d.getMonth() == this.getStart().getMonth()
                 && d.getYear() == this.getStart().getYear();
     }
-
+    /**
+     * This method will check if a calling Event is the same
+     * as the passed argument event
+     * @param e is the Event to be checked with the calling
+     *               object
+     * @return the bool value for if the calling object is the same Event
+     *          as e
+     */
     public boolean sameEvent(Event e)
     {
         return e.sameDate(this.getStart())
                 && Objects.equals(e.getTitle(), this.title)
                 && Objects.equals(e.getLocation(), this.location);
 
+    }
+
+    /**
+     * This method returns the String information of the Event
+     * @return String of the event info
+     */
+    public String toString()
+    {
+        String locationHelper = this.location;
+        if(this.location == "")
+            locationHelper = "No location specified";
+        return this.getTitle() +
+                ", @" + locationHelper +
+                ", " + this.getStart().toString();
     }
 
 }

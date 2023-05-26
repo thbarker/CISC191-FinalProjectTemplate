@@ -2,6 +2,7 @@ package edu.sdccd.cisc191.calendarPackage;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Stream;
 
 
 /**
@@ -49,10 +50,8 @@ public class CalendarController
      */
     public void print()
     {
-        for(int i = 0; i < eventList.size(); i++)
-        {
-            System.out.println(eventList.get(i).toString());
-        }
+        Stream<Event> eventStream = eventList.stream();
+        eventStream.forEach(n -> System.out.println(n.toString()));
     }
     /**
      * hasEvent method to return the boolean value representing
@@ -308,4 +307,5 @@ public class CalendarController
             return;
         eventList.remove(index);
     }
+
 }
