@@ -35,13 +35,25 @@ public class CalendarController
      * date of the event.
      * @param e is the Event to be inserted sorted
      */
-    public void addEvent(Event e)
-    {
+    /*This code first checks to see if the e parameter is null.
+        If it is, then a NullPointerException is thrown.
+        Otherwise, the event is added to the list in sorted order.
+        If the event title is blank, then a message is printed to the console and
+        the event are not added to the list.*/
+    public void addEvent(Event e) {
+        if (e == null) {
+            throw new NullPointerException("e cannot be null");
+        }
+        if (e.getTitle().isEmpty() || e.getDescription().isEmpty()) {
+            System.out.println("Event title and description cannot be blank.");
+            return;
+        }
+
         int i;
-        for(i = 0; i < eventList.size(); i++)
-        {
-            if(e.before(eventList.get(i)))
+        for(i = 0; i < eventList.size(); i++) {
+            if(e.before(eventList.get(i))) {
                 break;
+            }
         }
         eventList.add(i, e);
     }
